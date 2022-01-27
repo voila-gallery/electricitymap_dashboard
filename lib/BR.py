@@ -3,7 +3,7 @@ from collections import defaultdict
 import arrow
 import requests
 
-from .lib.validation import validate
+from lib.validation import validate
 
 URL = "http://tr.ons.org.br/Content/GetBalancoEnergetico/null"
 SOURCE = "ons.org.br"

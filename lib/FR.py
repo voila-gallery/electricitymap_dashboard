@@ -11,10 +11,10 @@ import pandas as pd
 import requests
 import xml.etree.ElementTree as ET
 
-from parsers.lib.config import refetch_frequency
+from lib.config import refetch_frequency
 
-from .lib.validation import validate, validate_production_diffs
-from .lib.utils import get_token
+from  lib.validation import validate, validate_production_diffs
+from  lib.utils import get_token
 
 API_ENDPOINT = 'https://opendata.reseaux-energies.fr/api/records/1.0/search/'
 

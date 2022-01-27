@@ -9,8 +9,8 @@ from collections import defaultdict
 from datetime import datetime, timedelta
 from operator import itemgetter
 
-from parsers.lib.config import refetch_frequency
-from .lib.validation import validate
+from lib.config import refetch_frequency
+from lib.validation import validate
 
 # Historical API
 API_BASE_URL = "https://sipub.coordinador.cl/api/v1/recursos/generacion_centrales_tecnologia_horario?"
@@ -138,6 +138,7 @@ def fetch_production(
     zone_key: str = "CL-SEN",
     session: requests.session = None,
     target_datetime: datetime = None,
+    
     logger: logging.Logger = logging.getLogger(__name__),
 ):
     if target_datetime is None and ENABLE_LIVE_PARSER:

@@ -25,10 +25,10 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-from parsers.lib.config import refetch_frequency
+from lib.config import refetch_frequency
 
-from .lib.utils import get_token, sum_production_dicts
-from .lib.validation import validate
+from lib.utils import get_token, sum_production_dicts
+from lib.validation import validate
 
 ENTSOE_ENDPOINT = 'https://transparency.entsoe.eu/api'
 ENTSOE_PARAMETER_DESC = {

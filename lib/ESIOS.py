@@ -8,8 +8,8 @@ import arrow
 # The request library is used to fetch content through HTTP
 import requests
 
-from .lib.exceptions import ParserException
-from .lib.utils import get_token
+from lib.exceptions import ParserException
+from lib.utils import get_token
 
 
 def fetch_exchange(zone_key1='ES', zone_key2='MA', session=None, token=None, logger=None) -> list:

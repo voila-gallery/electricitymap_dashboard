@@ -20,10 +20,10 @@ import arrow
 import pandas as pd
 import requests
 
-from parsers.lib.config import refetch_frequency
+from lib.config import refetch_frequency
 
-from .lib.utils import get_token
-from .lib.validation import validate
+from lib.utils import get_token
+from lib.validation import validate
 
 ELEXON_ENDPOINT = 'https://api.bmreports.com/BMRS/{}/v1'
 
