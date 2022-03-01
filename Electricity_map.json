@@ -1,1 +1,105 @@
-{"global": {"tabSetEnableClose": true, "tabSetTabLocation": "bottom"}, "borders": [], "layout": {"type": "row", "id": "#1", "children": [{"type": "tabset", "id": "#2", "children": [{"type": "tab", "id": "#3", "name": "New section ", "component": "sub", "config": {"model": {"global": {"splitterSize": 8, "tabSetEnableClose": true}, "borders": [], "layout": {"type": "row", "id": "#1", "children": [{"type": "row", "id": "#041b8d1e-9370-4866-b240-0af3bf944c39", "children": [{"type": "tabset", "id": "#0adfcd9d-ac13-4953-aa40-f9ab87a96263", "weight": 29.25243770314193, "enableTabStrip": false, "children": [{"type": "tab", "id": "#a0d310ce-3fcf-4fa8-a0dc-c901a4bbdc4d", "name": "Map", "component": "Widget", "config": {"layoutID": "#3"}}]}, {"type": "tabset", "id": "#6e7b616b-3fd6-4f38-9e95-4fe41fd1cb88", "weight": 45.74756229685807, "selected": 1, "enableTabStrip": true, "children": [{"type": "tab", "id": "#c2a4f610-d71e-4148-8524-8dd843410ef6", "name": "fig_production", "component": "Widget", "config": {"layoutID": "#3"}}, {"type": "tab", "id": "#0565e48c-9a79-4ab2-b987-ea6372cf6d0a", "name": "fig_price", "component": "Widget", "config": {"layoutID": "#3"}}], "active": true}]}]}}}}], "active": true}]}}
+{
+  "global": {
+    "tabSetEnableClose": true,
+    "tabSetTabLocation": "bottom"
+  },
+  "borders": [],
+  "layout": {
+    "type": "row",
+    "id": "#1",
+    "children": [
+      {
+        "type": "tabset",
+        "id": "#2",
+        "children": [
+          {
+            "type": "tab",
+            "id": "#3",
+            "name": "Electricity Map",
+            "component": "sub",
+            "config": {
+              "model": {
+                "global": {
+                  "splitterSize": 8,
+                  "tabSetEnableClose": true
+                },
+                "borders": [],
+                "layout": {
+                  "type": "row",
+                  "id": "#1",
+                  "children": [
+                    {
+                      "type": "row",
+                      "id": "#041b8d1e-9370-4866-b240-0af3bf944c39",
+                      "children": [
+                        {
+                          "type": "tabset",
+                          "id": "#0adfcd9d-ac13-4953-aa40-f9ab87a96263",
+                          "weight": 15,
+                          "enableTabStrip": false,
+                          "children": [
+                            {
+                              "type": "tab",
+                              "id": "#a0d310ce-3fcf-4fa8-a0dc-c901a4bbdc4d",
+                              "name": "Map",
+                              "component": "Widget",
+                              "config": {
+                                "layoutID": "#3"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "row",
+                          "id": "#71260f1e-8c60-4771-a39a-b62f341c1967",
+                          "weight": 10,
+                          "children": [
+                            {
+                              "type": "tabset",
+                              "id": "#6e7b616b-3fd6-4f38-9e95-4fe41fd1cb88",
+                              "weight": 50,
+                              "enableTabStrip": true,
+                              "children": [
+                                {
+                                  "type": "tab",
+                                  "id": "#c2a4f610-d71e-4148-8524-8dd843410ef6",
+                                  "name": "Electricity Production",
+                                  "component": "Widget",
+                                  "config": {
+                                    "layoutID": "#3"
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "type": "tabset",
+                              "id": "#5a8218d7-5d71-40e8-981d-dcafe5c58f1d",
+                              "weight": 50,
+                              "children": [
+                                {
+                                  "type": "tab",
+                                  "id": "#0565e48c-9a79-4ab2-b987-ea6372cf6d0a",
+                                  "name": "Electricity Price",
+                                  "component": "Widget",
+                                  "config": {
+                                    "layoutID": "#3"
+                                  }
+                                }
+                              ],
+                              "active": true
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "active": true
+      }
+    ]
+  }
+}
