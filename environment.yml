@@ -1,0 +1,11 @@
+name: electricity-map
+channels:
+  - conda-forge
+dependencies:
+  - arrow
+  - pandas
+  - beautifulsoup4
+  - ipyleaflet
+  - ipyflex
+  - bqplot
+  - voila
