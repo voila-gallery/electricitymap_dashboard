@@ -19,7 +19,7 @@ from bqplot import (
 )
 
 #Carbon Intensity per day function
-async def Carbon_Intensity_per_day(X):
+async def Carbon_Intensity_per_day(X, box):
         async with ElectricityMaps(token="OjtTdeocDJUab") as em:
                 response = await em.latest_carbon_intensity(ZoneRequest(X))
 
@@ -30,7 +30,7 @@ async def Carbon_Intensity_per_day(X):
         datetime_data = np.array([param2], dtype="datetime64")
         fig = plt.figure(title="Carbon intensity per day")
         bar = plt.bar(datetime_data, [param1, 700])
-        display(fig)
+        box.children = [box.children[0], fig]
 
 #Hourly Power Consumption
 async def Hourly_Power_Consumption(x):
@@ -43,9 +43,9 @@ async def Hourly_Power_Consumption(x):
     Power_Consumption = param2
     fig = plt.figure(title="Hourly Power Consumption")
     bar = plt.bar(datetime_data, Power_Consumption)
-    display(fig) 
+    display(fig)
 
-#Hourly Hourly Import Export Power Consumption 
+#Hourly Hourly Import Export Power Consumption
 async def Hourly_Imp_Exp_Power_Consumption(x):
         async with ElectricityMaps(token="OjtTdeocDJUab") as em:
                 response_history= await em.power_breakdown_history(ZoneRequest("FR"))
@@ -58,7 +58,7 @@ async def Hourly_Imp_Exp_Power_Consumption(x):
         fig_below = plt.figure(title="Power Import Total")
         below_bar = plt.bar(datetime_data, param2, colors=['red'], labels=['Below'])
         display(widgets.HBox([fig_above, fig_below]))
-        
+
 #Hourly Hourly Import Export Power Consumption
 async def Hourly_Exp_Imp_Power_Consumption(x):
         async with ElectricityMaps(token="OjtTdeocDJUab") as em:
@@ -72,8 +72,8 @@ async def Hourly_Exp_Imp_Power_Consumption(x):
         y_sc = LinearScale()
 
         bar = Bars(
-        x=hour_data, 
-        y=[param2, param1], 
+        x=hour_data,
+        y=[param2, param1],
         scales={"x": x_ord, "y": y_sc},
         padding=0.2,
         colors=CATEGORY10,
@@ -109,7 +109,7 @@ async def Power_Consumption_Source(x):
     ax_y.orientation = "horizontal"
     display(Figure(marks=[bar], axes=[ax_x, ax_y],title="Electricity consumption by source"))
 
-  
+
 #Power imported by country
 async def Power_Imported_Country(x):
     async with ElectricityMaps(token="OjtTdeocDJUab") as em:
@@ -159,7 +159,7 @@ def on_marker_click(event, **kwargs):
     loop.create_task(handle_click(marker))
 
 center = (52.204793, 360.121558)
-m = Map(center=center, zoom=2)  
+m = Map(center=center, zoom=2)
 marker = Marker(location=center, draggable=True)
 m.add_layer(marker)
 
@@ -366,7 +366,7 @@ def Countries_Abrreviation(country):
     for country_name, abbreviation in countries.items():
         if country.upper() == country_name.upper():
             return abbreviation
-            
+
     return "Country not found"
 
 
