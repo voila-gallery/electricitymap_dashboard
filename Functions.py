@@ -1,6 +1,6 @@
 import asyncio
 from aioelectricitymaps import ElectricityMaps, ZoneRequest
-from ipyleaflet import Map, GeoJSON, WidgetControl, FullScreenControl, ZoomControl, Marker
+from ipyleaflet import Map, GeoJSON, WidgetControl, FullScreenControl, ZoomControl,Marker
 from IPython.display import display
 import numpy as np
 import bqplot.pyplot as plt
@@ -8,6 +8,8 @@ import pandas as pd
 from datetime import datetime, timedelta
 from pkgutil import iter_modules
 import ipywidgets as widgets
+from geopy.geocoders import Nominatim
+import asyncio
 from bqplot import (
     CATEGORY10,
     LinearScale,
@@ -33,20 +35,21 @@ async def Carbon_Intensity_per_day(X, box):
         box.children = [box.children[0], fig]
 
 #Hourly Power Consumption
-async def Hourly_Power_Consumption(x):
+async def Hourly_Power_Consumption(x,box):
     async with ElectricityMaps(token="OjtTdeocDJUab") as em:
         response_history= await em.power_breakdown_history(ZoneRequest(x))
 
     param1 = [param.time for param in response_history.history]
     param2 = [param.power_consumption_total for param in response_history.history]
     datetime_data = np.array(param1, dtype="datetime64")
+    
     Power_Consumption = param2
     fig = plt.figure(title="Hourly Power Consumption")
     bar = plt.bar(datetime_data, Power_Consumption)
-    display(fig)
+    box.children = [box.children[0], fig]
 
 #Hourly Hourly Import Export Power Consumption
-async def Hourly_Imp_Exp_Power_Consumption(x):
+async def Hourly_Imp_Exp_Power_Consumption(x,box):
         async with ElectricityMaps(token="OjtTdeocDJUab") as em:
                 response_history= await em.power_breakdown_history(ZoneRequest("FR"))
         param1 = [param.power_export_total for param in response_history.history]
@@ -137,8 +140,7 @@ async def Power_Imported_Country(x):
     ax_y.orientation = "horizontal"
     display(Figure(marks=[bar], axes=[ax_x, ax_y],title="Electricity imported by country"))
     from ipyleaflet import Map, Marker
-from geopy.geocoders import Nominatim
-import asyncio
+
 
 async def handle_click(marker, **kwargs):
     location = marker.location
@@ -154,9 +156,8 @@ def get_country_from_coordinates(coordinates):
     return country
 
 #Callback function that gets triggered when the marker is clicked.
-def on_marker_click(event, **kwargs):
-    loop = asyncio.get_event_loop()
-    loop.create_task(handle_click(marker))
+async def on_marker_click(event, **kwargs):
+    asyncio.run(handle_click(marker))
 
 center = (52.204793, 360.121558)
 m = Map(center=center, zoom=2)
