@@ -2,9 +2,11 @@ import asyncio
 from aioelectricitymaps import ElectricityMaps, ZoneRequest
 from ipyleaflet import Map, GeoJSON, WidgetControl, FullScreenControl, ZoomControl,Marker
 from IPython.display import display
+from ipywidgets import Output, HBox,VBox as widgets
 import numpy as np
 import bqplot.pyplot as plt
 import pandas as pd
+import configparser
 from datetime import datetime, timedelta
 from pkgutil import iter_modules
 import ipywidgets as widgets
@@ -20,9 +22,15 @@ from bqplot import (
     DateScale
 )
 
+
+config = configparser.ConfigParser()
+config.read('.config')
+token = config['DEFAULT']['token']
+
+
 #Carbon Intensity per day function
-async def Carbon_Intensity_per_day(X, box):
-        async with ElectricityMaps(token="OjtTdeocDJUab") as em:
+async def Carbon_Intensity_per_day(X, box,token):
+        async with ElectricityMaps(token=token) as em:
                 response = await em.latest_carbon_intensity(ZoneRequest(X))
 
         param1 = response.carbon_intensity
@@ -35,8 +43,8 @@ async def Carbon_Intensity_per_day(X, box):
         box.children = [box.children[0], fig]
 
 #Hourly Power Consumption
-async def Hourly_Power_Consumption(x,box):
-    async with ElectricityMaps(token="OjtTdeocDJUab") as em:
+async def Hourly_Power_Consumption(x,box,token):
+    async with ElectricityMaps(token=token) as em:
         response_history= await em.power_breakdown_history(ZoneRequest(x))
 
     param1 = [param.time for param in response_history.history]
@@ -49,9 +57,9 @@ async def Hourly_Power_Consumption(x,box):
     box.children = [box.children[0], fig]
 
 #Hourly Hourly Import Export Power Consumption
-async def Hourly_Imp_Exp_Power_Consumption(x,box):
-        async with ElectricityMaps(token="OjtTdeocDJUab") as em:
-                response_history= await em.power_breakdown_history(ZoneRequest("FR"))
+async def Hourly_Imp_Exp_Power_Consumption(x,box,token):
+        async with ElectricityMaps(token=token) as em:
+                response_history= await em.power_breakdown_history(ZoneRequest(x))
         param1 = [param.power_export_total for param in response_history.history]
         param2 = [param.power_import_total for param in response_history.history]
         datetime_data = np.array(param1, dtype="datetime64[s]")
@@ -60,12 +68,15 @@ async def Hourly_Imp_Exp_Power_Consumption(x,box):
         above_bar = plt.bar(datetime_data, param1, colors=['blue'], labels=['Above'])
         fig_below = plt.figure(title="Power Import Total")
         below_bar = plt.bar(datetime_data, param2, colors=['red'], labels=['Below'])
-        display(widgets.HBox([fig_above, fig_below]))
+        if len(box.children) > 0:
+            box.children = [box.children[0], widgets.HBox([fig_above, fig_below])]
+        else:
+            box.children = [widgets.HBox([fig_above, fig_below])]
 
 #Hourly Hourly Import Export Power Consumption
-async def Hourly_Exp_Imp_Power_Consumption(x):
-        async with ElectricityMaps(token="OjtTdeocDJUab") as em:
-                response_history= await em.power_breakdown_history(ZoneRequest("FR"))
+async def Hourly_Exp_Imp_Power_Consumption(x,token):
+        async with ElectricityMaps(token=token) as em:
+                response_history= await em.power_breakdown_history(ZoneRequest(x))
         param1 = [param.power_export_total for param in response_history.history]
         param2 = [param.power_import_total for param in response_history.history]
         datetime_data=[param.time for param in response_history.history]
@@ -87,9 +98,9 @@ async def Hourly_Exp_Imp_Power_Consumption(x):
         display(Figure(marks=[bar], axes=[ax_x, ax_y]))
 
 #Power consumption by source
-async def Power_Consumption_Source(x):
-    async with ElectricityMaps(token="OjtTdeocDJUab") as em:
-            response_history= await em.power_breakdown_history(ZoneRequest("FR"))
+async def Power_Consumption_Source(x,token):
+    async with ElectricityMaps(token=token) as em:
+            response_history= await em.power_breakdown_history(ZoneRequest(x))
     data=response_history.history[0].power_consumption_breakdown
     categories = list(data.keys())
     values = list(data.values())
@@ -114,9 +125,9 @@ async def Power_Consumption_Source(x):
 
 
 #Power imported by country
-async def Power_Imported_Country(x):
-    async with ElectricityMaps(token="OjtTdeocDJUab") as em:
-        response_history= await em.power_breakdown_history(ZoneRequest("FR"))
+async def Power_Imported_Country(x,token):
+    async with ElectricityMaps(token=token) as em:
+        response_history= await em.power_breakdown_history(ZoneRequest(x))
     data=response_history.history[0].power_import_breakdown
     print(list(data.keys()))
     categories = list(data.keys())
@@ -159,15 +170,6 @@ def get_country_from_coordinates(coordinates):
 async def on_marker_click(event, **kwargs):
     asyncio.run(handle_click(marker))
 
-center = (52.204793, 360.121558)
-m = Map(center=center, zoom=2)
-marker = Marker(location=center, draggable=True)
-m.add_layer(marker)
-
-# Use on_click without await
-marker.on_click(on_marker_click)
-
-m
 
 #Trouver abrreviation du pays
 def Countries_Abrreviation(country):
