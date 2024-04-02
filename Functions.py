@@ -86,13 +86,6 @@ async def Power_Imported_Country(country,bar,token):
     bar.y=list(data.values())
 
 
-
-async def handle_click(marker, **kwargs):
-    location = marker.location
-    country = get_country_from_coordinates(location)
-    print(f"Clicked location: {location}, Country: {country}")
-    await Carbon_Intensity_per_day(Coutries_Abrreviation(country))
-
 #Trouver abrreviation du pays
 async def Countries_Abrreviation_N(country):
     async with ElectricityMaps(token=token) as em:
