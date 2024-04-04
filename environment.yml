@@ -12,6 +12,6 @@ dependencies:
   - voila
   - voila-material
   - pip:
-      -aioelectricitymaps
+      - aioelectricitymaps
       
   
