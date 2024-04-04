@@ -1,5 +1,6 @@
 {
   "VoilaConfiguration": {
-    "template": "material"
+    "template": "material",
+    "show_tracebacks":true 
   }
 }
