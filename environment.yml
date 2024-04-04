@@ -2,6 +2,7 @@ name: electricity-map
 channels:
   - conda-forge
 dependencies:
+  - python=3.11
   - pip
   - arrow
   - pandas
@@ -11,7 +12,9 @@ dependencies:
   - bqplot
   - voila
   - voila-material
-  -pip:
-      -aioelectricitymaps
+  - geopy
+  - requests 
+  - pip:
+      - aioelectricitymaps==1.0.0
       
   
