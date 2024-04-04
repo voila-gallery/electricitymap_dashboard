@@ -14,6 +14,6 @@ dependencies:
   - geopy
   - requests 
   - pip:
-      - aioelectricitymaps
+      - aioelectricitymaps==1.0.0
       
   
