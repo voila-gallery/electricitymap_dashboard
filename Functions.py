@@ -8,10 +8,7 @@ import bqplot.pyplot as plt
 import pandas as pd
 import configparser
 from datetime import datetime, timedelta
-from pkgutil import iter_modules
-import ipywidgets as widgets
 from geopy.geocoders import Nominatim
-import asyncio
 from bqplot import (
     CATEGORY10,
     LinearScale,
