@@ -11,6 +11,8 @@ dependencies:
   - bqplot
   - voila
   - voila-material
+  - geopy
+  - requests 
   - pip:
       - aioelectricitymaps
       
